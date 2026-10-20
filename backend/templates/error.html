@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Lỗi {{ status }} · Sổ lưu bút{% endblock %}
+
+{% block content %}
+<section class="error-section">
+    <p class="error-code">{{ status }}</p>
+    <p class="error-message">{{ message }}</p>
+    <a class="btn btn-primary" href="{% url 'index' %}">← Về trang chủ</a>
+</section>
+{% endblock %}

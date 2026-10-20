@@ -1,0 +1,35 @@
+{% load static %}
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Sổ lưu bút{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <a class="brand" href="{% url 'index' %}">📖 Sổ lưu bút</a>
+        <nav>
+            <a href="{% url 'index' %}"{% if request.path == '/' %} class="active"{% endif %}>Trang chủ</a>
+            <a href="{% url 'add' %}"{% if request.path == '/add' %} class="active"{% endif %}>Viết lời nhắn</a>
+            <a href="{% url 'stats' %}"{% if request.path == '/stats' %} class="active"{% endif %}>Thống kê</a>
+        </nav>
+    </header>
+
+    <main>
+        {% for msg in messages %}
+        <div class="flash flash-{{ msg.tags }}">{{ msg }}</div>
+        {% endfor %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>Sổ lưu bút &mdash; Django SSR</p>
+    </footer>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
