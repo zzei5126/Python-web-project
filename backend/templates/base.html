@@ -1,32 +1,30 @@
-{% load static %}
 <!doctype html>
 <html lang="vi">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Sổ lưu bút{% endblock %}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
     <header>
-        <a class="brand" href="{% url 'index' %}">📖 Sổ lưu bút</a>
+        <h2><a href="{% url 'index' %}">📖 Sổ lưu bút</a></h2>
         <nav>
-            <a href="{% url 'index' %}"{% if request.path == '/' %} class="active"{% endif %}>Trang chủ</a>
-            <a href="{% url 'add' %}"{% if request.path == '/add' %} class="active"{% endif %}>Viết lời nhắn</a>
-            <a href="{% url 'stats' %}"{% if request.path == '/stats' %} class="active"{% endif %}>Thống kê</a>
+            <a href="{% url 'index' %}">Trang chủ</a> |
+            <a href="{% url 'add' %}">Viết lời nhắn</a> |
+            <a href="{% url 'stats' %}">Thống kê</a>
         </nav>
+        <hr>
     </header>
 
     <main>
         {% for msg in messages %}
-        <div class="flash flash-{{ msg.tags }}">{{ msg }}</div>
+        <p><strong>Thông báo:</strong> {{ msg }}</p>
+        <hr>
         {% endfor %}
         {% block content %}{% endblock %}
     </main>
 
+    <hr>
     <footer>
         <p>Sổ lưu bút &mdash; Django SSR</p>
     </footer>

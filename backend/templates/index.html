@@ -1,99 +1,39 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section class="hero">
-    <p class="eyebrow">NHỮNG ĐIỀU NHỎ BÉ, ĐƯỢC GIỮ LẠI</p>
+<section>
+    <p>NHỮNG ĐIỀU NHỎ BÉ, ĐƯỢC GIỮ LẠI</p>
     <h1>Ghé qua.<br>Để lại một lời nhắn.</h1>
-    <p class="subtitle">Một lời chào, một kỷ niệm, hay bất cứ điều gì bạn muốn chia sẻ.</p>
-    <a class="btn btn-primary" href="{% url 'add' %}">✏️ Viết lời nhắn</a>
+    <p>Một lời chào, một kỷ niệm, hay bất cứ điều gì bạn muốn chia sẻ.</p>
+    <p><a href="{% url 'add' %}">✏️ Viết lời nhắn</a></p>
 </section>
 
-<section class="entries-section">
-    <h2>Tất cả lời nhắn <span class="badge">{{ entries|length }}</span></h2>
+<hr>
+
+<section>
+    <h2>Tất cả lời nhắn ({{ entries|length }})</h2>
 
     {% if entries %}
-    <div class="grid">
         {% for entry in entries %}
-        <article class="card">
-            <div class="card-header">
-                <div class="avatar">{{ entry.name|first }}</div>
-                <div>
-                    <strong>{{ entry.name }}</strong>
-                    <small class="text-muted">#{{ entry.id }}</small>
-                </div>
-            </div>
-            <p class="card-body">{{ entry.message }}</p>
-            <div class="card-footer">
-                <time class="text-muted">{{ entry.created_at|date:'d/m/Y H:i' }}</time>
-                <form method="post" action="{% url 'delete' entry.id %}" class="delete-form" data-id="{{ entry.id }}" data-name="{{ entry.name }}">
-                    {% csrf_token %}
-                    <button type="button" class="btn-delete" onclick="openDeleteModal(this)" title="Xóa lời nhắn">🗑️ Xóa</button>
-                </form>
-            </div>
+        <article>
+            <h3>{{ entry.name }} <small>#{{ entry.id }}</small></h3>
+            <p>{{ entry.message }}</p>
+            <p>
+                <time><small>{{ entry.created_at|date:'d/m/Y H:i' }}</small></time>
+            </p>
+            <form method="post" action="{% url 'delete' entry.id %}" onsubmit="return confirm('Bạn có chắc chắn muốn xóa lời nhắn của {{ entry.name|escapejs }} không?');">
+                {% csrf_token %}
+                <button type="submit">🗑️ Xóa</button>
+            </form>
+            <hr>
         </article>
         {% endfor %}
-    </div>
     {% else %}
-    <div class="empty-state">
-        <p class="empty-icon">📝</p>
-        <h3>Chưa có lời nhắn nào</h3>
-        <p>Hãy là người đầu tiên viết vào sổ lưu bút!</p>
-        <a class="btn btn-primary" href="{% url 'add' %}">Viết ngay</a>
-    </div>
+        <div>
+            <p>📝 Chưa có lời nhắn nào.</p>
+            <p>Hãy là người đầu tiên viết vào sổ lưu bút!</p>
+            <p><a href="{% url 'add' %}">Viết ngay</a></p>
+        </div>
     {% endif %}
 </section>
-
-<div id="deleteModal" class="modal-backdrop" aria-hidden="true">
-    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <div class="modal-icon">⚠️</div>
-        <h3 id="modalTitle">Xác nhận xóa lời nhắn</h3>
-        <p class="modal-desc">Bạn có chắc chắn muốn xóa lời nhắn của <strong id="modalTargetName"></strong> (<span id="modalTargetId"></span>) không?</p>
-        <div class="modal-actions">
-            <button type="button" class="btn btn-secondary" onclick="closeDeleteModal()">Hủy bỏ</button>
-            <button type="button" class="btn btn-danger" onclick="confirmDeleteAction()">Đồng ý xóa</button>
-        </div>
-    </div>
-</div>
-{% endblock %}
-
-{% block scripts %}
-<script>
-let currentDeleteForm = null;
-
-function openDeleteModal(button) {
-    currentDeleteForm = button.closest('form');
-    const name = currentDeleteForm.getAttribute('data-name');
-    const id = currentDeleteForm.getAttribute('data-id');
-    document.getElementById('modalTargetName').textContent = name;
-    document.getElementById('modalTargetId').textContent = '#' + id;
-    const modal = document.getElementById('deleteModal');
-    modal.classList.add('is-open');
-    modal.setAttribute('aria-hidden', 'false');
-}
-
-function closeDeleteModal() {
-    const modal = document.getElementById('deleteModal');
-    modal.classList.remove('is-open');
-    modal.setAttribute('aria-hidden', 'true');
-    currentDeleteForm = null;
-}
-
-function confirmDeleteAction() {
-    if (currentDeleteForm) {
-        currentDeleteForm.submit();
-    }
-}
-
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        closeDeleteModal();
-    }
-});
-
-document.getElementById('deleteModal').addEventListener('click', function(event) {
-    if (event.target === this) {
-        closeDeleteModal();
-    }
-});
-</script>
 {% endblock %}

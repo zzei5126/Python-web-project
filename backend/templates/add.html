@@ -3,39 +3,37 @@
 {% block title %}Viết lời nhắn · Sổ lưu bút{% endblock %}
 
 {% block content %}
-<section class="form-section">
-    <p class="eyebrow">MỘT CHÚT TỪ BẠN</p>
+<section>
+    <p>MỘT CHÚT TỪ BẠN</p>
     <h1>Bạn muốn nhắn gì?</h1>
 
-    <form class="entry-form" method="post" action="{% url 'add' %}">
+    <form method="post" action="{% url 'add' %}">
         {% csrf_token %}
 
         {% if form.non_field_errors %}
-        <div class="form-errors">
+        <div>
             {% for error in form.non_field_errors %}
-            <p>{{ error }}</p>
+            <p><strong>Lỗi:</strong> {{ error }}</p>
             {% endfor %}
         </div>
         {% endif %}
 
         {% for field in form %}
-        <div class="form-group">
-            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        <p>
+            <label for="{{ field.id_for_label }}"><strong>{{ field.label }}:</strong></label><br>
             {{ field }}
             {% if field.errors %}
-            <div class="field-errors">
                 {% for error in field.errors %}
-                <p>{{ error }}</p>
+                <br><small>Lỗi: {{ error }}</small>
                 {% endfor %}
-            </div>
             {% endif %}
-        </div>
+        </p>
         {% endfor %}
 
-        <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Gửi lời nhắn ↗</button>
-            <a href="{% url 'index' %}" class="btn btn-ghost">Quay lại</a>
-        </div>
+        <p>
+            <button type="submit">Gửi lời nhắn</button>
+            <a href="{% url 'index' %}">Quay lại</a>
+        </p>
     </form>
 </section>
 {% endblock %}
