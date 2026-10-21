@@ -5,7 +5,7 @@
     <p>NHỮNG ĐIỀU NHỎ BÉ, ĐƯỢC GIỮ LẠI</p>
     <h1>Ghé qua.<br>Để lại một lời nhắn.</h1>
     <p>Một lời chào, một kỷ niệm, hay bất cứ điều gì bạn muốn chia sẻ.</p>
-    <p><a href="{% url 'add' %}">✏️ Viết lời nhắn</a></p>
+    <p><a href="{% url 'add' %}">Viết lời nhắn</a></p>
 </section>
 
 <hr>
@@ -23,14 +23,14 @@
             </p>
             <form method="post" action="{% url 'delete' entry.id %}" onsubmit="return confirm('Bạn có chắc chắn muốn xóa lời nhắn của {{ entry.name|escapejs }} không?');">
                 {% csrf_token %}
-                <button type="submit">🗑️ Xóa</button>
+                <button type="submit">Xóa</button>
             </form>
             <hr>
         </article>
         {% endfor %}
     {% else %}
         <div>
-            <p>📝 Chưa có lời nhắn nào.</p>
+            <p>Chưa có lời nhắn nào.</p>
             <p>Hãy là người đầu tiên viết vào sổ lưu bút!</p>
             <p><a href="{% url 'add' %}">Viết ngay</a></p>
         </div>
