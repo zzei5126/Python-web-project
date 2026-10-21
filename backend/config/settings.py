@@ -7,7 +7,7 @@ environ.Env.read_env(BASE_DIR / ".env")
 
 DEBUG = env.bool("DEBUG", default=True)
 SECRET_KEY = env("SECRET_KEY", default="local-development-only-change-before-deployment-guestbook")
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1", "[::1]", "testserver", ".trycloudflare.com"])
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1", "[::1]", "testserver", ".trycloudflare.com", "python-web-project-production-990c.up.railway.app"])
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=["https://*.trycloudflare.com", "http://localhost:8000", "http://127.0.0.1:8000"])
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
