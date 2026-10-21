@@ -6,3 +6,5 @@ django-environ==0.14.0
 whitenoise==6.12.0
 filelock==4.2.4
 matplotlib==3.10.8
+guinicorn==20.0.4
+
