@@ -1,4 +1,4 @@
-# Sổ lưu bút (Guestbook) — Django SSR
+# Sổ lưu bút (Guestbook)
 
 Ứng dụng web sổ lưu bút viết bằng Python và Django thuần với kiến trúc Server-Side Rendering (SSR), không sử dụng frontend rời.
 
